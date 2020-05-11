@@ -110,12 +110,13 @@ onload_fun() ->
 onload_init(MzeFuns) ->
     revert(function(
         atom(?ONLOAD_INIT), [
-        clause([variable("OnLoadProc")], 'none', [
-            application(atom('erlang'), atom('register'), [
-                atom(?ONLOAD_REGNAME),
-                application(atom('erlang'), atom('self'), [])
-            ])]
-            ++
+        clause([variable("OnLoadProc")], 'none', 
+            % [
+            % application(atom('erlang'), atom('register'), [
+            %     atom(?ONLOAD_REGNAME),
+            %     application(atom('erlang'), atom('self'), [])
+            % ])]
+            % ++
             [onload_init_table(FA) || FA <- MzeFuns]
             ++ [
             application(atom('erlang'), atom('!'), [
