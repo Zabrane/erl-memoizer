@@ -139,7 +139,7 @@ onload_init_table(FA) ->
         clause([atom('undefined')], 'none', [
             application(atom('ets'), atom('new'), [
                 TblName,
-                list([ atom('named_table000')
+                list([ atom('named_table')
                      , atom('set')
                      , atom('public')
                      , tuple([ atom('read_concurrency'), atom('true') ])
