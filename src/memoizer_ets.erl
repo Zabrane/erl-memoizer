@@ -141,7 +141,7 @@ onload_init_table(FA) ->
         clause([atom('undefined')], 'none', [
             application(atom('ets'), atom('new'), [
                 TblName,
-                list([atom('named_table'), atom('set'), atom('public')])
+                list([atom('named_table'), atom('set'), atom('public'), tuple([atom('read_concurrency'),atom('true')]), tuple([atom('write_concurrency'),atom('true')]), tuple([atom('decentralized_counters'),atom('true')])])
             ])
         ]),
         clause([underscore()], 'none', [
