@@ -130,26 +130,27 @@ onload_init(MzeFuns) ->
         ])
     ])).
 
-
 %% @doc Returns the body of initializing one ETS table.
 -spec( onload_init_table(fa()) -> erl_syntax:syntaxTree() ).
 onload_init_table(FA) ->
     TblName = atom( memoizer_utils:mze_name(FA) ),
-
     case_expr(
         application(atom('ets'), atom('info'), [TblName]), [
         clause([atom('undefined')], 'none', [
             application(atom('ets'), atom('new'), [
                 TblName,
-                list([atom('named_table'), atom('set'), atom('public'), tuple([atom('read_concurrency'),atom('true')]), tuple([atom('write_concurrency'),atom('true')]), tuple([atom('decentralized_counters'),atom('true')])])
+                list([ atom('named_table000')
+                     , atom('set')
+                     , atom('public')
+                     , tuple([ atom('read_concurrency'), atom('true') ])
+                     , tuple([ atom('write_concurrency'), atom('true') ])
+                     , tuple([ atom('decentralized_counters'), atom('true') ]) ])
             ])
         ]),
         clause([underscore()], 'none', [
             atom('ok')
         ])
     ]).
-
-
 
 %% @doc Returns the onload loop function. This is an endless loop that keeps
 %% the ETS owner process alive.
