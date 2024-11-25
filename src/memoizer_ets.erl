@@ -161,10 +161,9 @@ onload_loop() ->
         clause([], 'none', [
             receive_expr([
                 clause([underscore()], 'none', [
-                    atom('ok')
+                    application(atom(?ONLOAD_LOOP), [])
                 ])
-            ]),
-            application(atom(?ONLOAD_LOOP), [])
+            ])
         ])
     ])).
 
