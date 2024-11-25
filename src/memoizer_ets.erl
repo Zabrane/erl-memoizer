@@ -178,10 +178,7 @@ memoize_fun(Form) ->
     Name    = atom_value( function_name(Form) ),
     Arity   = function_arity(Form),
     MzeName = memoizer_utils:mze_name(Name),
-
     [ memoizer_syntax:rename(Form, MzeName), mze_fun(Name, Arity) ].
-
-
 
 %% @doc Creates a memoization wrapper function.
 -spec( mze_fun(atom(), arity()) -> erl_syntax:syntaxTree() ).
@@ -190,23 +187,22 @@ mze_fun(Name, Arity) ->
     MzeName  = atom( memoizer_utils:mze_name(Name) ),
     VarList  = memoizer_syntax:var_list(memoizer_utils:var_list(Arity)),
     ValueVar = variable(?VALUE_VAR),
-
     revert(function(
         atom(Name), [
         clause(VarList, 'none', [
             case_expr(
-                application(atom('ets'), atom('lookup'), [
-                    TblName, tuple(VarList)
-                ]), [
-                clause([list([tuple([underscore(), ValueVar])])], 'none', [
-                    ValueVar
-                ]),
-                clause([list([])], 'none', [
+                application(atom('ets'), atom('lookup_element'), [
+                    TblName, tuple(VarList), integer(2), atom('$$not_found_')
+                ]), [   
+                clause([ atom('$$not_found_') ], 'none', [
                     match_expr( ValueVar, application(MzeName, VarList) ),
                     application(atom('ets'), atom('insert'), [
                         TblName,
                         tuple([ tuple(VarList), ValueVar ])
                     ]),
+                    ValueVar
+                ]),
+                clause([ ValueVar ], 'none', [
                     ValueVar
                 ])
             ])
