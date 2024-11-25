@@ -79,7 +79,7 @@ When using rebar, it can be specified as a dependency in `rebar.conf`:
 %% ...
 {deps, [
   %% ...
-  {memoizer, ".*", {git, "https://github.com/ZoltanLajosKis/erl-memoizer"}}
+  {memoizer, ".*", {git, "https://github.com/Zabrane/erl-memoizer.git"}}
 ]}.
 ```
 
